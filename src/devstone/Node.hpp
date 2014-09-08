@@ -28,6 +28,7 @@
 #define DEVSTONE_NODE 1
 
 #include <boost/graph/adjacency_list.hpp>
+#include <iostream>
 
 namespace devstone {
 
@@ -54,10 +55,47 @@ namespace devstone {
         { }
     };
 
-    typedef boost::adjacency_list < boost::vecS, boost::vecS,
-                                    boost::directedS,
-                                    VertexProperties,
-                                    EdgeProperties> Graph;
+    class Graph : public boost::adjacency_list < boost::vecS, boost::vecS,
+                                                 boost::directedS,
+                                                 VertexProperties,
+                                                 EdgeProperties>
+    {
+    public:
+        Graph()
+        { }
+
+        virtual ~Graph()
+        { }
+
+        void display() const
+        {
+            vertex_iterator it_g, end_g;
+
+            tie(it_g, end_g) = vertices(*this);
+            for (; it_g != end_g; ++it_g) {
+                adjacency_iterator neighbour_it, neighbour_end;
+
+                std::cout << (*this)[*it_g]._index << " [";
+                if ((*this)[*it_g]._type == COUPLED) {
+                    std::cout << "COUPLED";
+                } else if ((*this)[*it_g]._type == ATOMIC) {
+                    std::cout << "ATOMIC";
+                } else if ((*this)[*it_g]._type == INPUT) {
+                    std::cout << "INPUT";
+                } else if ((*this)[*it_g]._type == OUTPUT) {
+                    std::cout << "OUTPUT";
+                }
+
+                std::cout << "] -> { ";
+                tie(neighbour_it, neighbour_end) = adjacent_vertices(*it_g,
+                                                                     *this);
+                for (; neighbour_it != neighbour_end; ++neighbour_it) {
+                    std::cout << (*this)[*neighbour_it]._index << " ";
+                }
+                std::cout << "} ; ";
+            }
+        }
+    };
 
 } // namespace devstone
 

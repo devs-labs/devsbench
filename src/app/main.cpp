@@ -35,10 +35,13 @@ void example1()
         devstone::Graph* groot = new devstone::Graph();
         devstone::Graph::vertex_descriptor v0_0 = boost::add_vertex(*groot);
         devstone::Graph::vertex_descriptor v0_1 = boost::add_vertex(*groot);
+        devstone::Graph::vertex_descriptor v0_2 = boost::add_vertex(*groot);
 
         (*groot)[v0_0] = devstone::VertexProperties(0, devstone::COUPLED);
         (*groot)[v0_1] = devstone::VertexProperties(1, devstone::COUPLED);
+        (*groot)[v0_2] = devstone::VertexProperties(2, devstone::ATOMIC);
         boost::add_edge(v0_0, v0_1, *groot);
+        boost::add_edge(v0_1, v0_2, *groot);
 
         root->addGraph(groot);
     }
@@ -69,21 +72,28 @@ void example1()
         devstone::Graph::vertex_descriptor v11_0 = boost::add_vertex(*g11);
         devstone::Graph::vertex_descriptor v11_1 = boost::add_vertex(*g11);
         devstone::Graph::vertex_descriptor v11_2 = boost::add_vertex(*g11);
+        devstone::Graph::vertex_descriptor v11_3 = boost::add_vertex(*g11);
 
         (*g11)[v11_0] = devstone::VertexProperties(0, devstone::INPUT);
         (*g11)[v11_1] = devstone::VertexProperties(1, devstone::ATOMIC);
         (*g11)[v11_2] = devstone::VertexProperties(2, devstone::ATOMIC);
+        (*g11)[v11_3] = devstone::VertexProperties(3, devstone::OUTPUT);
         boost::add_edge(v11_0, v11_1, *g11);
         boost::add_edge(v11_1, v11_2, *g11);
+        boost::add_edge(v11_2, v11_3, *g11);
 
         n11->addGraph(g11);
     }
     root->addChild(n11);
+
+    std::cout << "Example 1:" << std::endl;
+    root->display();
 
     delete root;
 }
 
 int main()
 {
+    example1();
     return 0;
 }
