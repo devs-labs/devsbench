@@ -1,14 +1,14 @@
 /**
  * @file Node.hpp
- * @author The PARADEVS Development Team
+ * @author The DEVSTONE Development Team
  * See the AUTHORS or Authors.txt file
  */
 
 /*
- * PARADEVS - the multimodeling and simulation environment
- * This file is a part of the PARADEVS environment
+ * DEVSTONE - a DEVS model generator
+ * This file is a part of the DEVSTONE software
  *
- * Copyright (C) 2013 ULCO http://www.univ-litoral.fr
+ * Copyright (C) 2014 ULCO http://www.univ-litoral.fr
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,58 +24,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COMMON_NODE
-#define COMMON_NODE 1
+#ifndef DEVSTONE_NODE
+#define DEVSTONE_NODE 1
 
-#include <paradevs/common/Model.hpp>
+#include <boost/graph/adjacency_list.hpp>
 
-#include <string>
+namespace devstone {
 
-namespace paradevs { namespace common {
+    enum VertexType {
+        INPUT = 0, OUTPUT, ATOMIC, COUPLED
+    };
 
-template < class Time, class SchedulerHandle >
-class Model;
-
-template < class Time, class SchedulerHandle >
-class Node
-{
-public :
-    Node(Model < Time, SchedulerHandle >* model, const std::string& port_name)
-        : _model(model), _port_name(port_name)
-    { }
-
-    Node(const Node < Time, SchedulerHandle >& other)
-    : _model(other._model), _port_name(other._port_name)
-    { }
-
-    virtual ~Node()
-    { }
-
-    bool operator<(const Node < Time, SchedulerHandle >& o) const
+    struct VertexProperties
     {
-        if (o._model == _model) {
-            return o._port_name < _port_name;
-        } else {
-            return o._model < _model;
-        }
-    }
+        int        _index;
+        VertexType _type;
 
-    bool operator==(const Node < Time, SchedulerHandle >& o) const
+        VertexProperties() : _index(0), _type(ATOMIC)
+        { }
+
+        VertexProperties(int index, VertexType type) :
+            _index(index), _type(type)
+        { }
+    };
+
+    struct EdgeProperties
     {
-        return (o._port_name == _port_name and o._model == _model);
-    }
+        EdgeProperties()
+        { }
+    };
 
-    const std::string& get_port_name() const
-    { return _port_name; }
+    typedef boost::adjacency_list < boost::vecS, boost::vecS,
+                                    boost::directedS,
+                                    VertexProperties,
+                                    EdgeProperties> Graph;
 
-    Model < Time, SchedulerHandle >* get_model() const
-    { return _model; }
-
-private :
-    Model < Time, SchedulerHandle >* _model;
-    std::string                      _port_name;
-};
-
-} } // namespace paradevs common
+} // namespace devstone
 
 #endif
