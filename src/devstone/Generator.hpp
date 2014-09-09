@@ -46,13 +46,8 @@ namespace devstone {
         TreeNode* generate() const;
 
     private:
-        Graph* build_graph_HI() const;
-        Graph* build_graph_HO() const;
-        Graph* build_graph_LI() const;
+        Graph* build_graph() const;
         Graph* build_low_level_graph() const;
-        TreeNode* generate_LI() const;
-        TreeNode* generate_HI() const;
-        TreeNode* generate_HO() const;
 
         GeneratorType _type;
         int _depth;
