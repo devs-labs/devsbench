@@ -59,11 +59,19 @@ namespace devstone {
             g->addVertex(_width + 1, 0, OUTPUT);
 
         // edges
+        g->addEdge(input_vertex, vertexList[0]);
         g->addEdge(input_vertex, vertexList[1]);
         for (int i = 1; i < _width - 1; ++i) {
             g->addEdge(vertexList[i], vertexList[i + 1]);
         }
         g->addEdge(vertexList[0], output_vertex);
+        return g;
+    }
+
+    Graph* Generator::build_graph_HO() const
+    {
+        Graph* g = new Graph();
+
         return g;
     }
 

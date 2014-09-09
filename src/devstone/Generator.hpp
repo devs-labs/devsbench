@@ -47,6 +47,7 @@ namespace devstone {
 
     private:
         Graph* build_graph_HI() const;
+        Graph* build_graph_HO() const;
         Graph* build_graph_LI() const;
         Graph* build_low_level_graph() const;
         TreeNode* generate_LI() const;

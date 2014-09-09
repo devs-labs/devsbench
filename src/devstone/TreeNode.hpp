@@ -62,7 +62,8 @@ namespace devstone {
 
         void display() const
         {
-            std::cout << make_space() << _index << ": ";
+            std::cout << make_space() << "(" << _level << "/"
+                      << _index << "): ";
             if (_graph) {
                 _graph->display();
             }
