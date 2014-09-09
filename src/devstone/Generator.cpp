@@ -63,11 +63,21 @@ namespace devstone {
             g->addEdge(input_vertex, vertexList[i]);
         }
         g->addEdge(vertexList[0], output_vertex);
-        if (_type == HI) {
+        if (_type == HI or _type == HO) {
             for (int i = 1; i < _width - 1; ++i) {
                 g->addEdge(vertexList[i], vertexList[i + 1]);
             }
-            g->addEdge(vertexList[0], output_vertex);
+        }
+
+        if (_type == HO) {
+            Graph::vertex_descriptor input_vertex_2 =
+                g->addVertex(_width + 2, 0, INPUT);
+            Graph::vertex_descriptor output_vertex_2 =
+                g->addVertex(_width + 3, 0, OUTPUT);
+
+            g->addEdge(input_vertex_2, vertexList[1]);
+            g->addEdge(vertexList[1], output_vertex_2);
+            g->addEdge(input_vertex_2, vertexList[0]);
         }
         return g;
     }

@@ -115,10 +115,22 @@ void exampleHI()
     delete root;
 }
 
+void exampleHO()
+{
+    devstone::Generator generator(devstone::HO, 3, 4, 1, 1);
+    devstone::TreeNode* root = generator.generate();
+
+    std::cout << "Example HO:" << std::endl;
+    root->display();
+
+    delete root;
+}
+
 int main()
 {
     example1();
     exampleLI();
     exampleHI();
+    exampleHO();
     return 0;
 }
