@@ -93,23 +93,23 @@ void example1()
     delete root;
 }
 
-void example2()
+void exampleLI()
 {
     devstone::Generator generator(devstone::LI, 3, 4, 1, 1);
     devstone::TreeNode* root = generator.generate();
 
-    std::cout << "Example 2:" << std::endl;
+    std::cout << "Example LI:" << std::endl;
     root->display();
 
     delete root;
 }
 
-void example3()
+void exampleHI()
 {
     devstone::Generator generator(devstone::HI, 3, 4, 1, 1);
     devstone::TreeNode* root = generator.generate();
 
-    std::cout << "Example 3:" << std::endl;
+    std::cout << "Example HI:" << std::endl;
     root->display();
 
     delete root;
@@ -118,7 +118,7 @@ void example3()
 int main()
 {
     example1();
-    example2();
-    example3();
+    exampleLI();
+    exampleHI();
     return 0;
 }

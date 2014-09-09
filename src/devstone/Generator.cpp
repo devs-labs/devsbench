@@ -60,7 +60,9 @@ namespace devstone {
 
         // edges
         g->addEdge(input_vertex, vertexList[0]);
-        g->addEdge(input_vertex, vertexList[1]);
+        for (int i = 1; i < _width; ++i) {
+            g->addEdge(input_vertex, vertexList[i]);
+        }
         for (int i = 1; i < _width - 1; ++i) {
             g->addEdge(vertexList[i], vertexList[i + 1]);
         }
