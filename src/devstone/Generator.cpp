@@ -54,9 +54,9 @@ namespace devstone {
         }
 
         Graph::vertex_descriptor input_vertex =
-            g->addVertex(_width + 1, 0, INPUT);
+            g->addVertex(_width, 0, INPUT);
         Graph::vertex_descriptor output_vertex =
-            g->addVertex(_width + 2, 0, OUTPUT);
+            g->addVertex(_width + 1, 0, OUTPUT);
 
         // edges
         g->addEdge(input_vertex, vertexList[1]);
@@ -81,9 +81,9 @@ namespace devstone {
         }
 
         Graph::vertex_descriptor input_vertex =
-            g->addVertex(_width + 1, 0, INPUT);
+            g->addVertex(_width, 0, INPUT);
         Graph::vertex_descriptor output_vertex =
-            g->addVertex(_width + 2, 0, OUTPUT);
+            g->addVertex(_width + 1, 0, OUTPUT);
 
         // edges
         for (int i = 0; i < _width; ++i) {
