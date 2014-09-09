@@ -26,11 +26,9 @@
 
 #include <devstone/Generator.hpp>
 
-using namespace devsbench;
+namespace devsbench { namespace devstone {
 
-namespace devstone {
-
-    devsbench::Graph* Generator::build_low_level_graph() const
+    Graph* Generator::build_low_level_graph() const
     {
         Graph* g = new Graph();
         Graph::vertex_descriptor inner_vertex = g->addVertex(0, 0, ATOMIC);
@@ -109,4 +107,4 @@ namespace devstone {
         return root;
     }
 
-} // namespace devstone
+} } // namespace devstone devsbench

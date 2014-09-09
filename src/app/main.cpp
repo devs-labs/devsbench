@@ -27,6 +27,9 @@
 #include <devstone/Generator.hpp>
 #include <devsbench/Node.hpp>
 #include <devsbench/TreeNode.hpp>
+#include <tree/Generator.hpp>
+
+using namespace devsbench;
 
 void example1()
 {
@@ -126,11 +129,28 @@ void exampleHO()
     delete root;
 }
 
+void exampleTree()
+{
+    int nbr_sommets = 10000;
+    int nbr_sources = nbr_sommets / 100;
+    std::vector < int > niveau = { 5, 4, 3, 2 };
+    tree::Generator generator;
+    devsbench::TreeNode* root = generator.generate(nbr_sommets, nbr_sources,
+                                                   2, 3, niveau);
+
+    std::cout << "Example Tree:" << std::endl;
+    root->display();
+
+    delete root;
+}
+
+
 int main()
 {
     example1();
     exampleLI();
     exampleHI();
     exampleHO();
+    exampleTree();
     return 0;
 }

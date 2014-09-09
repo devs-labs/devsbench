@@ -56,7 +56,7 @@ namespace devsbench {
 
         EdgeProperties(const std::string& beginName = "",
                        const std::string& endName = "",
-                       double weight = 0) :
+                       double weight = 1) :
             _beginName(beginName), _endName(endName), _weight(weight)
         { }
     };
@@ -78,7 +78,7 @@ namespace devsbench {
                      Graph::vertex_descriptor end,
                      const std::string& end_name)
         {
-            boost::add_edge(begin, end, EdgeProperties(begin_name, end_name, 0),
+            boost::add_edge(begin, end, EdgeProperties(begin_name, end_name, 1),
                             *this);
         }
 
@@ -124,6 +124,9 @@ namespace devsbench {
             }
         }
     };
+
+    typedef Graph::vertex_descriptor vertex_to;
+    typedef Graph::edge_descriptor edge_to;
 
 } // namespace devsbench
 

@@ -14,6 +14,6 @@ SET_TARGET_PROPERTIES(devsbench PROPERTIES ${DEVSBENCH_APP_PROPERTIES})
 TARGET_LINK_LIBRARIES(devsbench
   ${Boost_SYSTEM_LIBRARY}
   ${Boost_TIMER_LIBRARY}
-  devsbenchdevstone)
+  devsbenchdevstone devsbenchtree)
 
 INSTALL(TARGETS devsbench DESTINATION bin)

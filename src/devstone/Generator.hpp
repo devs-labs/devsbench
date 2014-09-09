@@ -24,12 +24,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVSTONE_GENERATOR
-#define DEVSTONE_GENERATOR 1
+#ifndef DEVSBENCH_DEVSTONE_GENERATOR
+#define DEVSBENCH_DEVSTONE_GENERATOR 1
 
 #include <devsbench/TreeNode.hpp>
 
-namespace devstone {
+namespace devsbench { namespace devstone {
 
     enum GeneratorType {
         LI = 0, HI, HO
@@ -43,11 +43,11 @@ namespace devstone {
                                 _itt(itt), _ett(ett)
         { }
 
-        devsbench::TreeNode* generate() const;
+        TreeNode* generate() const;
 
     private:
-        devsbench::Graph* build_graph() const;
-        devsbench::Graph* build_low_level_graph() const;
+        Graph* build_graph() const;
+        Graph* build_low_level_graph() const;
 
         GeneratorType _type;
         int _depth;
@@ -56,6 +56,6 @@ namespace devstone {
         double _ett;
     };
 
-} // namespace devstone
+} } // namespace devsbench devstone
 
 #endif
