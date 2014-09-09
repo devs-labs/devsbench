@@ -40,6 +40,33 @@ namespace devstone {
         return g;
     }
 
+    Graph* Generator::build_graph_HI() const
+    {
+        Graph* g = new Graph();
+        std::vector < Graph::vertex_descriptor > vertexList;
+
+        for (int i = 0; i < _width; ++i) {
+            if (i == 0) {
+                vertexList.push_back(g->addVertex(i, 0, COUPLED));
+            } else {
+                vertexList.push_back(g->addVertex(i, 0, ATOMIC));
+            }
+        }
+
+        Graph::vertex_descriptor input_vertex =
+            g->addVertex(_width + 1, 0, INPUT);
+        Graph::vertex_descriptor output_vertex =
+            g->addVertex(_width + 2, 0, OUTPUT);
+
+        // edges
+        g->addEdge(input_vertex, vertexList[1]);
+        for (int i = 1; i < _width - 1; ++i) {
+            g->addEdge(vertexList[i], vertexList[i + 1]);
+        }
+        g->addEdge(vertexList[0], output_vertex);
+        return g;
+    }
+
     Graph* Generator::build_graph_LI() const
     {
         Graph* g = new Graph();
@@ -58,6 +85,7 @@ namespace devstone {
         Graph::vertex_descriptor output_vertex =
             g->addVertex(_width + 2, 0, OUTPUT);
 
+        // edges
         for (int i = 0; i < _width; ++i) {
             g->addEdge(input_vertex, vertexList[i]);
         }
@@ -102,7 +130,27 @@ namespace devstone {
 
     TreeNode* Generator::generate_HI() const
     {
-        return new TreeNode(0, 0);
+        TreeNode* root = new TreeNode(0, 0);
+        root->addGraph(build_graph_HI());
+
+        int l = 1;
+        TreeNode* father = root;
+
+        while (l < _depth - 1) {
+            TreeNode* n = new TreeNode(l, 0);
+            n->addGraph(build_graph_HI());
+            father->addChild(n);
+            father = n;
+            ++l;
+        }
+
+        {
+            TreeNode* n = new TreeNode(l, 0);
+            n->addGraph(build_low_level_graph());
+            father->addChild(n);
+        }
+
+        return root;
     }
 
     TreeNode* Generator::generate_HO() const

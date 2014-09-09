@@ -104,9 +104,21 @@ void example2()
     delete root;
 }
 
+void example3()
+{
+    devstone::Generator generator(devstone::HI, 3, 4, 1, 1);
+    devstone::TreeNode* root = generator.generate();
+
+    std::cout << "Example 3:" << std::endl;
+    root->display();
+
+    delete root;
+}
+
 int main()
 {
     example1();
     example2();
+    example3();
     return 0;
 }
