@@ -1,12 +1,12 @@
 /**
  * @file TreeNode.hpp
- * @author The DEVSTONE Development Team
+ * @author The DEVSBENCH Development Team
  * See the AUTHORS or Authors.txt file
  */
 
 /*
- * DEVSTONE - a DEVS model generator
- * This file is a part of the DEVSTONE software
+ * DEVSBENCH - a DEVS model generator
+ * This file is a part of the DEVSBENCH software
  *
  * Copyright (C) 2014 ULCO http://www.univ-litoral.fr
  *
@@ -24,15 +24,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVSTONE_TREE_NODE
-#define DEVSTONE_TREE_NODE 1
+#ifndef DEVSBENCH_TREE_NODE
+#define DEVSBENCH_TREE_NODE 1
 
-#include <devstone/Node.hpp>
+#include <devsbench/Node.hpp>
 
 #include <iostream>
 #include <vector>
 
-namespace devstone {
+namespace devsbench {
 
     class TreeNode
     {
@@ -99,6 +99,6 @@ namespace devstone {
         int _level;
     };
 
-} // namespace devstone
+} // namespace devsbench
 
 #endif

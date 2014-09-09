@@ -1,0 +1,11 @@
+prefix=@DEVSBENCH_PKGCONFIG_PREFIXPATH@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/@DEVSBENCH_PKGCONFIG_LIBDIR@
+includedir=${prefix}/include
+
+Name: vle
+Description: DEVSBENCH: a devs model generator
+Requires: glibmm-2.4
+Version: @DEVSBENCH_VERSION@
+Libs:	-L${libdir}
+Cflags: -I${includedir}/devsbench-@DEVSBENCH_VERSION_SHORT@ -I@DEVSTONE_PKGCONFIG_BOOSTINCLUDE_DIRS@

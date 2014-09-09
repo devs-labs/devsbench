@@ -1,12 +1,12 @@
 /**
  * @file Node.hpp
- * @author The DEVSTONE Development Team
+ * @author The DEVSBENCH Development Team
  * See the AUTHORS or Authors.txt file
  */
 
 /*
- * DEVSTONE - a DEVS model generator
- * This file is a part of the DEVSTONE software
+ * DEVSBENCH - a DEVS model generator
+ * This file is a part of the DEVSBENCH software
  *
  * Copyright (C) 2014 ULCO http://www.univ-litoral.fr
  *
@@ -24,13 +24,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVSTONE_NODE
-#define DEVSTONE_NODE 1
+#ifndef DEVSBENCH_NODE
+#define DEVSBENCH_NODE 1
 
 #include <boost/graph/adjacency_list.hpp>
 #include <iostream>
 
-namespace devstone {
+namespace devsbench {
 
     enum VertexType {
         INPUT = 0, OUTPUT, ATOMIC, COUPLED
@@ -125,6 +125,6 @@ namespace devstone {
         }
     };
 
-} // namespace devstone
+} // namespace devsbench
 
 #endif

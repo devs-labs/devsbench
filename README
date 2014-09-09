@@ -1,5 +1,5 @@
-Devstone : a DEVS model generator
-=================================
+DevsBench : a DEVS model generator
+==================================
 
 See AUTHORS and COPYRIGHT for the list of contributors.
 
@@ -16,7 +16,7 @@ Getting the code
 ----------------
 
 The source tree is currently hosted on GitHub. To view the repository online :
-    https://github.com/devs-labs/devstone
+    https://github.com/devs-labs/devsbench
 
 The URL to clone it:
-    git@github.com:devs-labs/devstone.git
+    git@github.com:devs-labs/devsbench.git

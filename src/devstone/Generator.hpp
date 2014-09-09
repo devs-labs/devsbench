@@ -1,12 +1,12 @@
 /**
  * @file Generator.hpp
- * @author The DEVSTONE Development Team
+ * @author The DEVSBENCH Development Team
  * See the AUTHORS or Authors.txt file
  */
 
 /*
- * DEVSTONE - a DEVS model generator
- * This file is a part of the DEVSTONE software
+ * DEVSBENCH - a DEVS model generator
+ * This file is a part of the DEVSBENCH software
  *
  * Copyright (C) 2014 ULCO http://www.univ-litoral.fr
  *
@@ -27,7 +27,7 @@
 #ifndef DEVSTONE_GENERATOR
 #define DEVSTONE_GENERATOR 1
 
-#include <devstone/TreeNode.hpp>
+#include <devsbench/TreeNode.hpp>
 
 namespace devstone {
 
@@ -43,11 +43,11 @@ namespace devstone {
                                 _itt(itt), _ett(ett)
         { }
 
-        TreeNode* generate() const;
+        devsbench::TreeNode* generate() const;
 
     private:
-        Graph* build_graph() const;
-        Graph* build_low_level_graph() const;
+        devsbench::Graph* build_graph() const;
+        devsbench::Graph* build_low_level_graph() const;
 
         GeneratorType _type;
         int _depth;
