@@ -42,22 +42,22 @@ namespace devstone {
         double     _weight;
         VertexType _type;
 
-        VertexProperties() : _index(0), _weight(0), _type(ATOMIC)
-        { }
-
-        VertexProperties(int index, double weight, VertexType type) :
+        VertexProperties(int index = 0, double weight = 0.0,
+                         VertexType type = ATOMIC) :
             _index(index), _weight(weight), _type(type)
         { }
     };
 
     struct EdgeProperties
     {
-        double _weight;
+        std::string _beginName;
+        std::string _endName;
+        double      _weight;
 
-        EdgeProperties() : _weight(0)
-        { }
-
-        EdgeProperties(double weight) : _weight(weight)
+        EdgeProperties(const std::string& beginName = "",
+                       const std::string& endName = "",
+                       double weight = 0) :
+            _beginName(beginName), _endName(endName), _weight(weight)
         { }
     };
 
@@ -74,9 +74,12 @@ namespace devstone {
         { }
 
         void addEdge(Graph::vertex_descriptor begin,
-                     Graph::vertex_descriptor end)
+                     const std::string& begin_name,
+                     Graph::vertex_descriptor end,
+                     const std::string& end_name)
         {
-            boost::add_edge(begin, end, *this);
+            boost::add_edge(begin, end, EdgeProperties(begin_name, end_name, 0),
+                            *this);
         }
 
         Graph::vertex_descriptor addVertex(
@@ -93,7 +96,8 @@ namespace devstone {
 
             tie(it_g, end_g) = vertices(*this);
             for (; it_g != end_g; ++it_g) {
-                adjacency_iterator neighbour_it, neighbour_end;
+                // adjacency_iterator neighbour_it, neighbour_end;
+                out_edge_iterator neighbour_it, neighbour_end;
 
                 std::cout << (*this)[*it_g]._index << " [";
                 if ((*this)[*it_g]._type == COUPLED) {
@@ -107,10 +111,14 @@ namespace devstone {
                 }
 
                 std::cout << "] -> { ";
-                tie(neighbour_it, neighbour_end) = adjacent_vertices(*it_g,
-                                                                     *this);
+                tie(neighbour_it, neighbour_end) = out_edges(*it_g, *this);
                 for (; neighbour_it != neighbour_end; ++neighbour_it) {
-                    std::cout << (*this)[*neighbour_it]._index << " ";
+                    vertex_descriptor vertex = target(*neighbour_it, *this);
+
+                    std::cout << (*this)[*neighbour_it]._beginName
+                              << " -> "
+                              << (*this)[vertex]._index << ":"
+                              << (*this)[*neighbour_it]._endName << " ";
                 }
                 std::cout << "} ; ";
             }

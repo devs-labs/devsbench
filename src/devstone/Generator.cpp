@@ -35,8 +35,8 @@ namespace devstone {
         Graph::vertex_descriptor input_vertex = g->addVertex(1, 0, INPUT);
         Graph::vertex_descriptor output_vertex = g->addVertex(2, 0, OUTPUT);
 
-        g->addEdge(input_vertex, inner_vertex);
-        g->addEdge(inner_vertex, output_vertex);
+        g->addEdge(input_vertex, "in1", inner_vertex, "in");
+        g->addEdge(inner_vertex, "out", output_vertex, "out1");
         return g;
     }
 
@@ -60,12 +60,12 @@ namespace devstone {
 
         // edges
         for (int i = 0; i < _width; ++i) {
-            g->addEdge(input_vertex, vertexList[i]);
+            g->addEdge(input_vertex, "in1", vertexList[i], "in1");
         }
-        g->addEdge(vertexList[0], output_vertex);
+        g->addEdge(vertexList[0], "out1", output_vertex, "out1");
         if (_type == HI or _type == HO) {
             for (int i = 1; i < _width - 1; ++i) {
-                g->addEdge(vertexList[i], vertexList[i + 1]);
+                g->addEdge(vertexList[i], "out1", vertexList[i + 1], "in1");
             }
         }
 
@@ -75,9 +75,9 @@ namespace devstone {
             Graph::vertex_descriptor output_vertex_2 =
                 g->addVertex(_width + 3, 0, OUTPUT);
 
-            g->addEdge(input_vertex_2, vertexList[1]);
-            g->addEdge(vertexList[1], output_vertex_2);
-            g->addEdge(input_vertex_2, vertexList[0]);
+            g->addEdge(input_vertex_2, "in2", vertexList[1], "in2");
+            g->addEdge(vertexList[1], "out2", output_vertex_2, "out2");
+            g->addEdge(input_vertex_2, "in2", vertexList[0], "in2");
         }
         return g;
     }
