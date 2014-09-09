@@ -73,6 +73,20 @@ namespace devstone {
         virtual ~Graph()
         { }
 
+        void addEdge(Graph::vertex_descriptor begin,
+                     Graph::vertex_descriptor end)
+        {
+            boost::add_edge(begin, end, *this);
+        }
+
+        Graph::vertex_descriptor addVertex(
+            int index, double weight, VertexType type)
+        {
+            Graph::vertex_descriptor vertex = boost::add_vertex(*this);
+            (*this)[vertex] = VertexProperties(index, weight, type);
+            return vertex;
+        }
+
         void display() const
         {
             vertex_iterator it_g, end_g;
