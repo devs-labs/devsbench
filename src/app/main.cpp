@@ -24,6 +24,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <devstone/Generator.hpp>
 #include <devstone/Node.hpp>
 #include <devstone/TreeNode.hpp>
 
@@ -37,9 +38,9 @@ void example1()
         devstone::Graph::vertex_descriptor v0_1 = boost::add_vertex(*groot);
         devstone::Graph::vertex_descriptor v0_2 = boost::add_vertex(*groot);
 
-        (*groot)[v0_0] = devstone::VertexProperties(0, devstone::COUPLED);
-        (*groot)[v0_1] = devstone::VertexProperties(1, devstone::COUPLED);
-        (*groot)[v0_2] = devstone::VertexProperties(2, devstone::ATOMIC);
+        (*groot)[v0_0] = devstone::VertexProperties(0, 0, devstone::COUPLED);
+        (*groot)[v0_1] = devstone::VertexProperties(1, 0, devstone::COUPLED);
+        (*groot)[v0_2] = devstone::VertexProperties(2, 0, devstone::ATOMIC);
         boost::add_edge(v0_0, v0_1, *groot);
         boost::add_edge(v0_1, v0_2, *groot);
 
@@ -54,9 +55,9 @@ void example1()
         devstone::Graph::vertex_descriptor v10_1 = boost::add_vertex(*g10);
         devstone::Graph::vertex_descriptor v10_2 = boost::add_vertex(*g10);
 
-        (*g10)[v10_0] = devstone::VertexProperties(0, devstone::ATOMIC);
-        (*g10)[v10_1] = devstone::VertexProperties(1, devstone::ATOMIC);
-        (*g10)[v10_2] = devstone::VertexProperties(2, devstone::OUTPUT);
+        (*g10)[v10_0] = devstone::VertexProperties(0, 0, devstone::ATOMIC);
+        (*g10)[v10_1] = devstone::VertexProperties(1, 0, devstone::ATOMIC);
+        (*g10)[v10_2] = devstone::VertexProperties(2, 0, devstone::OUTPUT);
         boost::add_edge(v10_0, v10_1, *g10);
         boost::add_edge(v10_0, v10_1, *g10);
         boost::add_edge(v10_1, v10_2, *g10);
@@ -74,10 +75,10 @@ void example1()
         devstone::Graph::vertex_descriptor v11_2 = boost::add_vertex(*g11);
         devstone::Graph::vertex_descriptor v11_3 = boost::add_vertex(*g11);
 
-        (*g11)[v11_0] = devstone::VertexProperties(0, devstone::INPUT);
-        (*g11)[v11_1] = devstone::VertexProperties(1, devstone::ATOMIC);
-        (*g11)[v11_2] = devstone::VertexProperties(2, devstone::ATOMIC);
-        (*g11)[v11_3] = devstone::VertexProperties(3, devstone::OUTPUT);
+        (*g11)[v11_0] = devstone::VertexProperties(0, 0, devstone::INPUT);
+        (*g11)[v11_1] = devstone::VertexProperties(1, 0, devstone::ATOMIC);
+        (*g11)[v11_2] = devstone::VertexProperties(2, 0, devstone::ATOMIC);
+        (*g11)[v11_3] = devstone::VertexProperties(3, 0, devstone::OUTPUT);
         boost::add_edge(v11_0, v11_1, *g11);
         boost::add_edge(v11_1, v11_2, *g11);
         boost::add_edge(v11_2, v11_3, *g11);
@@ -92,8 +93,20 @@ void example1()
     delete root;
 }
 
+void example2()
+{
+    devstone::Generator generator(devstone::LI, 1, 10, 1, 1);
+    devstone::TreeNode* root = generator.generate();
+
+    std::cout << "Example 2:" << std::endl;
+    root->display();
+
+    delete root;
+}
+
 int main()
 {
     example1();
+    example2();
     return 0;
 }

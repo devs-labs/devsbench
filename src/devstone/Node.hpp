@@ -39,19 +39,25 @@ namespace devstone {
     struct VertexProperties
     {
         int        _index;
+        double     _weight;
         VertexType _type;
 
-        VertexProperties() : _index(0), _type(ATOMIC)
+        VertexProperties() : _index(0), _weight(0), _type(ATOMIC)
         { }
 
-        VertexProperties(int index, VertexType type) :
-            _index(index), _type(type)
+        VertexProperties(int index, double weight, VertexType type) :
+            _index(index), _weight(weight), _type(type)
         { }
     };
 
     struct EdgeProperties
     {
-        EdgeProperties()
+        double _weight;
+
+        EdgeProperties() : _weight(0)
+        { }
+
+        EdgeProperties(double weight) : _weight(weight)
         { }
     };
 
