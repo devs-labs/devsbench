@@ -78,10 +78,35 @@ namespace devsbench {
         {
             return _index;
         }
+        
+        /* Modif ! */
+        Graph* graph() const
+        {
+            return _graph;
+        }
+	
+		const Graph* children_graph(uint index) const
+        {
+            return _children.at(index)->graph();
+        }
+        
+		TreeNode* children_treenode(int index) const
+        {
+            return _children.at(index);
+        }
 
         unsigned int level() const
         {
             return _level;
+        }
+		
+        unsigned int level_max(uint &level) const
+        {
+			for (std::map < int, TreeNode* >::const_iterator
+                     it = _children.begin(); it != _children.end(); ++it) {
+                level = it->second->level();
+                it->second->level_max(level);
+            }
         }
 
         unsigned int modelNumber() const

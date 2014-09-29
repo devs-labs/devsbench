@@ -42,7 +42,7 @@ namespace devsbench {
         double     _weight;
         VertexType _type;
 
-        VertexProperties(int index = 0, double weight = 0.0,
+        VertexProperties(int index = 0, double weight = 1.0,
                          VertexType type = ATOMIC) :
             _index(index), _weight(weight), _type(type)
         { }
@@ -62,7 +62,7 @@ namespace devsbench {
     };
 
     class Graph : public boost::adjacency_list < boost::vecS, boost::vecS,
-                                                 boost::directedS,
+                                                 boost::bidirectionalS,//directedS,
                                                  VertexProperties,
                                                  EdgeProperties>
     {
@@ -127,6 +127,9 @@ namespace devsbench {
 
     typedef Graph::vertex_descriptor vertex_to;
     typedef Graph::edge_descriptor edge_to;
+    Graph::vertex_iterator vertexIto, vertexEndo;
+    Graph::adjacency_iterator neighbourIto, neighbourEndo;
+    Graph::in_edge_iterator ei, edge_end;
 
 } // namespace devsbench
 
