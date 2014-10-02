@@ -100,7 +100,7 @@ namespace devsbench {
             return _level;
         }
 		
-        unsigned int level_max(uint &level) const
+        void level_max(uint &level) const
         {
 			for (std::map < int, TreeNode* >::const_iterator
                      it = _children.begin(); it != _children.end(); ++it) {

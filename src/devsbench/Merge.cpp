@@ -30,10 +30,15 @@ namespace devsbench {
 
 void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2, const std::vector<std::pair<int,int>> &in_edge_connection,
 								const std::vector<std::pair<int,int>> &out_edge_connection, 
-								std::vector<std::pair<int,int>> &liste_father, uint cpt_vertex){
+								std::vector<std::pair<int,int>> &liste_father, uint cpt_vertex, bool multiple){
 	/*Destruction de l'arc reliant le modèle couplé à son voisin*/
 	for(uint i =0; i <out_edge_connection.size(); i++){
 		remove_edge(out_edge_connection.at(i).first,out_edge_connection.at(i).second,*go1);
+	}
+	if(multiple == true){
+		for(uint i =0; i <in_edge_connection.size(); i++){
+			remove_edge(in_edge_connection.at(i).first,in_edge_connection.at(i).second,*go1);
+		}
 	}
 	
 	uint nbr_vertex_go1 = num_vertices(*go1); //Nombre de noeud dans go1 avant modification
@@ -86,7 +91,7 @@ void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2, const std::vector<st
 			tie(neighbourIto, neighbourEndo) = adjacent_vertices(*vertexIto,*go2);
 			uint rec_neigh = -1;
 			for (; neighbourIto != neighbourEndo; ++neighbourIto){
-				if(rec_neigh != *neighbourIto){
+				if(rec_neigh != *neighbourIto || (*go2)[*neighbourIto]._type == COUPLED){
 					rec_neigh = *neighbourIto;
 					if(*neighbourIto != nbr_in){
 						if((*go2)[*neighbourIto]._type != OUTPUT){
@@ -127,14 +132,29 @@ void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2, const std::vector<st
 					(*go1)[e2]._weight += (*go2)[e1]._weight;				
 				}
 			}
-		}else if((*go2)[*vertexIto]._type == INPUT){
+		}else if((*go2)[*vertexIto]._type == INPUT && multiple == false){
 			tie(neighbourIto, neighbourEndo) = adjacent_vertices(*vertexIto,*go2);
 			for (; neighbourIto != neighbourEndo; ++neighbourIto){
-				if(*neighbourIto != nbr_in){
+				if(*neighbourIto != nbr_in ){
 					tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 					remove_edge(in_edge_connection.at(in_ec_cpt).first,out_edge_connection.at(ec_cpt).first,*go1);
 					add_edge(in_edge_connection.at(in_ec_cpt).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
 					EdgeProperties((*go2)[e1]._beginName,(*go2)[e1]._endName,(*go2)[e1]._weight), *go1);
+				}
+			}
+			in_ec_cpt++;
+		}else if((*go2)[*vertexIto]._type == INPUT && multiple == true){
+			tie(neighbourIto, neighbourEndo) = adjacent_vertices(*vertexIto,*go2);
+			for (; neighbourIto != neighbourEndo; ++neighbourIto){
+				if(*neighbourIto != nbr_in){	
+					tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
+					add_edge(in_edge_connection.at(in_ec_cpt).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
+					EdgeProperties((*go2)[e1]._beginName,(*go2)[e1]._endName,(*go2)[e1]._weight), *go1);
+				}else{
+					tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
+					add_edge(vertex(in_edge_connection.at(in_ec_cpt).first,*go1),
+					vertex(*neighbourIto + nbr_vertex_go1 -1 -nbr_in,*go1),
+					EdgeProperties((*go2)[e1]._beginName,(*go2)[e1]._endName,(*go2)[e1]._weight),*go1);
 				}
 			}
 			in_ec_cpt++;
@@ -152,53 +172,104 @@ void Merge_Devs_Graph(TreeNode *root, bool rec){
 	std::vector<std::pair<int,int>> liste_father, liste_father2;
 	std::map<int, TreeNode*> table_father1, table_father2;
 	table_father1[0] = root;
+	edge_to e1,e2;
+	bool found;
 
 	while(compteur < level){
 		uint cpt_vertex = 0;
-		//std::cout<<std::endl;
-		//std::cout<<"*** Niveau *** -> "<<compteur<<std::endl;
+		std::cout<<std::endl;
+		std::cout<<"*** Niveau *** -> "<<compteur<<std::endl;
 		tie(vertexIto, vertexEndo) = vertices(*go1);
 		uint nbr_go1 = num_vertices(*go1);
 		while(cpt_vertex < nbr_go1){
-			//std::cout<<"vertex -> "<<cpt_vertex<<" Noeud : "<<(*go1)[cpt_vertex]._index<<" Type = "<<(*go1)[cpt_vertex]._type<<std::endl;
+			std::cout<<"vertex -> "<<cpt_vertex<<" Noeud : "<<(*go1)[cpt_vertex]._index<<" Type = "<<(*go1)[cpt_vertex]._type<<std::endl;
 			if((*go1)[cpt_vertex]._type == COUPLED){
-				//std::cout<<"C'est un COUPLED "<<std::endl;
-				//std::cout<<"IN : ";
+				std::cout<<"C'est un COUPLED "<<std::endl;
+				std::cout<<"IN : ";
+				uint rec_neight = -1;
+				bool multiple = false;
 				for (boost::tie(ei,edge_end) = in_edges(cpt_vertex, *go1); ei != edge_end; ++ei){
 					std::pair<int,int> couple;
-					//std::cout<<"("<<(*go1)[source(*ei, *go1)]._index<<",";
+					std::cout<<"("<<(*go1)[source(*ei, *go1)]._index<<",";
 					couple.first = source(*ei, *go1);
-					//std::cout<<(*go1)[cpt_vertex]._index<<") / ";
+					std::cout<<(*go1)[cpt_vertex]._index<<") / ";
 					couple.second = cpt_vertex; 
 					in_edge_connection.push_back(couple);
+					if(rec_neight == source(*ei, *go1))
+						multiple = true;
+					rec_neight = source(*ei, *go1);
 				}
-				//std::cout<<std::endl;
-				//std::cout<<"OUT : ";
+				std::cout<<std::endl;
+				std::cout<<"OUT : ";
 				tie(neighbourIto, neighbourEndo) = adjacent_vertices(cpt_vertex,*go1);
 				for (; neighbourIto != neighbourEndo; ++neighbourIto){
 					std::pair<int,int> couple1;
-					//std::cout<<"("<<(*go1)[cpt_vertex]._index<<",";
+					std::cout<<"("<<(*go1)[cpt_vertex]._index<<",";
 					couple1.first = cpt_vertex; 
-					//std::cout<<(*go1)[*neighbourIto]._index<<") / ";
+					std::cout<<(*go1)[*neighbourIto]._index<<") / ";
 					couple1.second = *neighbourIto;
 					out_edge_connection.push_back(couple1);
 				}
+				std::cout<<std::endl;
 				if(compteur > 0){
 					int father_index;
-					//std::cout<<liste_father.size()<<std::endl;
 					for(uint id = 0; id<liste_father.size(); id++){
 						if(liste_father.at(id).first == (*go1)[cpt_vertex]._index){
 							father_index = liste_father.at(id).second;
-							//std::cout<<"father_index : "<<father_index<<std::endl; 
 							break;
 						}
 					}
 					table_father2[(*go1)[cpt_vertex]._index] = table_father1[father_index]->children_treenode((*go1)[cpt_vertex]._index);
 					TreeNode *father = table_father1[father_index];
-					Merge_Devs_Level_Coupled(go1, father->children_graph((*go1)[cpt_vertex]._index), in_edge_connection, out_edge_connection, liste_father2, cpt_vertex);
+					Merge_Devs_Level_Coupled(go1, father->children_graph((*go1)[cpt_vertex]._index), in_edge_connection, out_edge_connection, liste_father2, cpt_vertex, multiple);
 				}else{
 					table_father2[(*go1)[cpt_vertex]._index] = table_father1[0]->children_treenode((*go1)[cpt_vertex]._index);
-					Merge_Devs_Level_Coupled(go1, root->children_graph((*go1)[cpt_vertex]._index), in_edge_connection, out_edge_connection, liste_father2, cpt_vertex);
+					Merge_Devs_Level_Coupled(go1, root->children_graph((*go1)[cpt_vertex]._index), in_edge_connection, out_edge_connection, liste_father2, cpt_vertex, multiple);
+				}
+				if(multiple == true){
+					//std::cout<<"Multiple !!!!"<<std::endl;
+					uint vertex_save = -1;
+					for(uint i =0; i <in_edge_connection.size(); i++){
+						if(vertex_save != in_edge_connection.at(i).first){
+							uint rec_vertex = -1;
+							double rec_weight = 0;
+							bool repete = false;
+							std::vector<std::pair<double,int>> truc;
+							tie(neighbourIto, neighbourEndo) = adjacent_vertices(in_edge_connection.at(i).first,*go1);
+							for (; neighbourIto != neighbourEndo; ++neighbourIto){
+								if(rec_vertex == *neighbourIto){
+									repete = true;
+									tie(e1,found)=edge(vertex(in_edge_connection.at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
+									rec_weight += (*go1)[e1]._weight;
+								}else{
+									if(repete == true){
+										neighbourIto--;
+										std::pair<double,int> tt;
+										tt.first = rec_weight;
+										tt.second = *neighbourIto;
+										truc.push_back(tt);
+										neighbourIto++;
+										repete = false;
+									}
+									tie(e1,found)=edge(vertex(in_edge_connection.at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
+									rec_weight = (*go1)[e1]._weight;
+									rec_vertex = *neighbourIto;
+								}
+							}
+							neighbourIto--;
+							std::pair<double,int> tt;
+							tt.first = rec_weight;
+							tt.second = *neighbourIto;
+							truc.push_back(tt);
+							
+							for(uint id = 0; id < truc.size(); id++){
+								remove_edge(in_edge_connection.at(i).first,truc.at(id).second,*go1);
+								add_edge(in_edge_connection.at(i).first,truc.at(id).second, EdgeProperties("out1","in1",truc.at(id).first), *go1);
+							}
+							
+							vertex_save = in_edge_connection.at(i).first;
+						}
+					}
 				}
 				Affichage_OrientedGraph(go1);
 				in_edge_connection.clear();
