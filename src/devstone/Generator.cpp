@@ -31,12 +31,12 @@ namespace devsbench { namespace devstone {
     Graph* Generator::build_low_level_graph() const
     {
         Graph* g = new Graph();
-        Graph::vertex_descriptor inner_vertex = g->addVertex(0, 0, ATOMIC);
-        Graph::vertex_descriptor input_vertex = g->addVertex(1, 0, INPUT);
+        Graph::vertex_descriptor input_vertex = g->addVertex(0, 0, INPUT);
+        Graph::vertex_descriptor inner_vertex = g->addVertex(1, 0, ATOMIC);
         Graph::vertex_descriptor output_vertex = g->addVertex(2, 0, OUTPUT);
 
-        g->addEdge(input_vertex, "in1", inner_vertex, "in");
-        g->addEdge(inner_vertex, "out", output_vertex, "out1");
+        g->addEdge(input_vertex, "in1", inner_vertex, "in1");
+        g->addEdge(inner_vertex, "out1", output_vertex, "out1");
         return g;
     }
 
