@@ -160,18 +160,18 @@ void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2, const std::vector<st
 	}
 }
 
-void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std::pair<int,int>> &in_edge_connection,
-								const std::vector<std::pair<int,int>> &out_edge_connection, 
-								const std::vector<std::pair<std::pair<std::string,std::string>,double>> &save_connection_in,
-								const std::vector<std::pair<std::pair<std::string,std::string>,double>> &save_connection_out,
-								std::vector<std::pair<int,int>> &liste_father, uint cpt_vertex, bool multiple){
+void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std::pair<int,int>> *in_edge_connection,
+								const std::vector<std::pair<int,int>> *out_edge_connection, 
+								const std::vector<std::pair<std::pair<std::string,std::string>,double>> *save_connection_in,
+								const std::vector<std::pair<std::pair<std::string,std::string>,double>> *save_connection_out,
+								std::vector<std::pair<int,int>> *liste_father, uint cpt_vertex, bool multiple){
 	//Destruction de l'arc reliant le modèle couplé à son voisin
-	for(uint i =0; i <out_edge_connection.size(); i++){
-		remove_edge(out_edge_connection.at(i).first,out_edge_connection.at(i).second,*go1);
+	for(uint i =0; i <out_edge_connection->size(); i++){
+		remove_edge(out_edge_connection->at(i).first,out_edge_connection->at(i).second,*go1);
 	}
 	if(multiple == true){
-		for(uint i =0; i <in_edge_connection.size(); i++){
-			remove_edge(in_edge_connection.at(i).first,in_edge_connection.at(i).second,*go1);
+		for(uint i =0; i <in_edge_connection->size(); i++){
+			remove_edge(in_edge_connection->at(i).first,in_edge_connection->at(i).second,*go1);
 		}
 	}
 	
@@ -192,7 +192,7 @@ void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std
 			std::pair<int,int> father;
 			father.first = (*go2)[*vertexIto]._index;
 			father.second = (*go1)[cpt_vertex]._index;
-			liste_father.push_back(father);
+			liste_father->push_back(father);
 		}
 	}
 		
@@ -245,46 +245,46 @@ void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std
 								tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 								std::string index_port = (*go2)[e1]._endName;
 								uint port;
-								for(uint id = 0; id < save_connection_out.size(); id++){
-									if(save_connection_out.at(id).first.first == index_port)
+								for(uint id = 0; id < save_connection_out->size(); id++){
+									if(save_connection_out->at(id).first.first == index_port)
 										port = id;
 								}
-								add_edge(out_edge_connection.at(port).first, out_edge_connection.at(port).second ,
-								EdgeProperties((*go2)[e1]._beginName,save_connection_out.at(port).first.second,save_connection_out.at(port).second), *go1);
+								add_edge(out_edge_connection->at(port).first, out_edge_connection->at(port).second ,
+								EdgeProperties((*go2)[e1]._beginName,save_connection_out->at(port).first.second,save_connection_out->at(port).second), *go1);
 							}else{
 								tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 								std::string index_port = (*go2)[e1]._endName;
 								uint port;
-								for(uint id = 0; id < save_connection_out.size(); id++){
-									if(save_connection_out.at(id).first.first == index_port)
+								for(uint id = 0; id < save_connection_out->size(); id++){
+									if(save_connection_out->at(id).first.first == index_port)
 										port = id;
 								}
-								add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, out_edge_connection.at(port).second ,
-								EdgeProperties((*go2)[e1]._beginName,save_connection_out.at(port).first.second,save_connection_out.at(port).second), *go1);
+								add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, out_edge_connection->at(port).second ,
+								EdgeProperties((*go2)[e1]._beginName,save_connection_out->at(port).first.second,save_connection_out->at(port).second), *go1);
 							}
 						}
 					}else{
 						//std::cout<<" *Son voisin est le sommet originel"<<std::endl;
 						tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
-						if(in_edge_connection.size() != 0)
-							add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, in_edge_connection.at(0).second,
+						if(in_edge_connection->size() != 0)
+							add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, in_edge_connection->at(0).second,
 									EdgeProperties((*go2)[e1]._beginName,(*go2)[e1]._endName,(*go2)[e1]._weight), *go1);
 						else
-							add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, out_edge_connection.at(0).first,
+							add_edge(*vertexIto + nbr_vertex_go1 -1 - nbr_in, out_edge_connection->at(0).first,
 									EdgeProperties((*go2)[e1]._beginName,(*go2)[e1]._endName,(*go2)[e1]._weight), *go1);
 					}
 				}else{
 					tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 					if(*vertexIto  == nbr_in){
-						if(in_edge_connection.size() != 0)
-							tie(e2,found)=edge(vertex(in_edge_connection.at(0).second,*go1),vertex(*neighbourIto + nbr_vertex_go1 -1 - nbr_in,*go1),*go1);
+						if(in_edge_connection->size() != 0)
+							tie(e2,found)=edge(vertex(in_edge_connection->at(0).second,*go1),vertex(*neighbourIto + nbr_vertex_go1 -1 - nbr_in,*go1),*go1);
 						else
-							tie(e2,found)=edge(vertex(out_edge_connection.at(0).first,*go1),vertex(*neighbourIto + nbr_vertex_go1 -1 - nbr_in,*go1),*go1);
+							tie(e2,found)=edge(vertex(out_edge_connection->at(0).first,*go1),vertex(*neighbourIto + nbr_vertex_go1 -1 - nbr_in,*go1),*go1);
 					}else if (*neighbourIto == nbr_in){
-						if(in_edge_connection.size() != 0)
-							tie(e2,found)=edge(vertex(*vertexIto + nbr_vertex_go1 -1 - nbr_in,*go1),vertex(in_edge_connection.at(0).second,*go1),*go1);
+						if(in_edge_connection->size() != 0)
+							tie(e2,found)=edge(vertex(*vertexIto + nbr_vertex_go1 -1 - nbr_in,*go1),vertex(in_edge_connection->at(0).second,*go1),*go1);
 						else
-							tie(e2,found)=edge(vertex(*vertexIto + nbr_vertex_go1 -1 - nbr_in,*go1),vertex(out_edge_connection.at(0).first,*go1),*go1);
+							tie(e2,found)=edge(vertex(*vertexIto + nbr_vertex_go1 -1 - nbr_in,*go1),vertex(out_edge_connection->at(0).first,*go1),*go1);
 					}else
 						tie(e2,found)=edge(vertex(*vertexIto + nbr_vertex_go1 -1 - nbr_in,*go1),vertex(*neighbourIto + nbr_vertex_go1 -1 - nbr_in,*go1),*go1);
 					(*go1)[e2]._weight += (*go2)[e1]._weight;				
@@ -300,32 +300,32 @@ void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std
 					std::string index_port = (*go2)[e1]._beginName;
 					//std::cout<<index_port<<" -> ";
 					uint port;
-					for(uint id = 0; id < save_connection_in.size(); id++){
-						if(save_connection_in.at(id).first.second == index_port){
+					for(uint id = 0; id < save_connection_in->size(); id++){
+						if(save_connection_in->at(id).first.second == index_port){
 							//std::cout<<id<<" -> "<<std::endl;
 							port = id;
 						}
 					}
 					//std::cout<<"  Sommet de depart : "<<(*go1)[in_edge_connection.at(port).first]._index<<std::endl;
 					//std::cout<<"  Sommet d'arrivé : "<<(*go1)[*neighbourIto + nbr_vertex_go1 -1 -nbr_in]._index<<std::endl;
-					remove_edge(in_edge_connection.at(port).first,in_edge_connection.at(port).second,*go1);			
-					add_edge(in_edge_connection.at(port).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
-					EdgeProperties(save_connection_in.at(port).first.first,(*go2)[e1]._endName,save_connection_in.at(port).second), *go1);
+					remove_edge(in_edge_connection->at(port).first,in_edge_connection->at(port).second,*go1);			
+					add_edge(in_edge_connection->at(port).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
+					EdgeProperties(save_connection_in->at(port).first.first,(*go2)[e1]._endName,save_connection_in->at(port).second), *go1);
 				}else{
 					//std::cout<<" *Son voisin est le sommet originel"<<std::endl;
 					tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 					std::string index_port = (*go2)[e1]._beginName;
 					//std::cout<<index_port<<" -> ";
 					uint port;
-					for(uint id = 0; id < save_connection_in.size(); id++){
-						if(save_connection_in.at(id).first.second == index_port){
+					for(uint id = 0; id < save_connection_in->size(); id++){
+						if(save_connection_in->at(id).first.second == index_port){
 							//std::cout<<id<<" -> "<<std::endl;
 							port = id;
 						}
 					}
 					//std::cout<<"  Sommet de depart : "<<(*go1)[in_edge_connection.at(port).first]._index<<std::endl;
 					//std::cout<<"  Sommet d'arrivé : "<<(*go1)[in_edge_connection.at(port).second]._index<<std::endl;
-					tie(e2,found)=edge(vertex(in_edge_connection.at(port).first,*go1),vertex(in_edge_connection.at(port).second,*go1),*go1);
+					tie(e2,found)=edge(vertex(in_edge_connection->at(port).first,*go1),vertex(in_edge_connection->at(port).second,*go1),*go1);
 					//std::cout<<(*go1)[e2]._endName<<std::endl;
 					(*go1)[e2]._endName = (*go2)[e1]._endName;
 					//std::cout<<(*go1)[e2]._endName<<std::endl;
@@ -337,12 +337,12 @@ void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std
 				tie(e1,found)=edge(vertex(*vertexIto,*go2),vertex(*neighbourIto,*go2),*go2);
 				std::string index_port = (*go2)[e1]._beginName;
 				uint port;
-				for(uint id = 0; id < save_connection_in.size(); id++){
-					if(save_connection_in.at(id).first.second == index_port)
+				for(uint id = 0; id < save_connection_in->size(); id++){
+					if(save_connection_in->at(id).first.second == index_port)
 						port = id;
 				}
-				add_edge(in_edge_connection.at(port).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
-				EdgeProperties(save_connection_in.at(port).first.first,(*go2)[e1]._endName,save_connection_in.at(port).second), *go1);
+				add_edge(in_edge_connection->at(port).first,*neighbourIto + nbr_vertex_go1 -1 -nbr_in,
+				EdgeProperties(save_connection_in->at(port).first.first,(*go2)[e1]._endName,save_connection_in->at(port).second), *go1);
 			}
 		}
 	}
@@ -354,9 +354,12 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 	root->level_max(level);
 	//std::cout<<"level: "<<level<<std::endl;
 	uint compteur = 0;
-	std::vector<std::pair<int,int>> in_edge_connection, out_edge_connection;
-	std::vector<std::pair<int,int>> liste_father, liste_father2;
-	std::vector<std::pair<std::pair<std::string,std::string>,double>> save_connection_in, save_connection_out;
+	std::vector<std::pair<int,int>> *in_edge_connection = new std::vector<std::pair<int,int>>();
+	std::vector<std::pair<int,int>> *out_edge_connection = new std::vector<std::pair<int,int>>();
+	std::vector<std::pair<int,int>> liste_father;
+	std::vector<std::pair<int,int>> *liste_father2 = new std::vector<std::pair<int,int>>();
+	std::vector<std::pair<std::pair<std::string,std::string>,double>> * save_connection_in = new std::vector<std::pair<std::pair<std::string,std::string>,double>>();
+	std::vector<std::pair<std::pair<std::string,std::string>,double>> * save_connection_out = new std::vector<std::pair<std::pair<std::string,std::string>,double>>();
 	std::map<int, TreeNode*> table_father1, table_father2;
 	table_father1[0] = root;
 	edge_to e1,e2;
@@ -381,7 +384,7 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 					couple.first = source(*ei, *go1);
 					//std::cout<<(*go1)[cpt_vertex]._index<<") / ";
 					couple.second = cpt_vertex; 
-					in_edge_connection.push_back(couple);
+					in_edge_connection->push_back(couple);
 					
 					/*Enregistrement des informations sur les arcs entrant*/
 					tie(e1,found)= edge(vertex(couple.first,*go1),vertex(couple.second,*go1),*go1);
@@ -391,7 +394,7 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 					std::pair<std::pair<std::string, std::string>,double> edge_inf;
 					edge_inf.first = edge_name;
 					edge_inf.second = (*go1)[e1]._weight;
-					save_connection_in.push_back(edge_inf);
+					save_connection_in->push_back(edge_inf);
 					
 					if(rec_neight == source(*ei, *go1))
 						multiple = true;
@@ -406,7 +409,7 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 					couple.first = cpt_vertex; 
 					//std::cout<<(*go1)[*neighbourIto]._index<<") / ";
 					couple.second = *neighbourIto;
-					out_edge_connection.push_back(couple);
+					out_edge_connection->push_back(couple);
 					
 					/*Enregistrement des informations sur les arcs sortant*/
 					tie(e1,found)= edge(vertex(couple.first,*go1),vertex(couple.second,*go1),*go1);
@@ -416,7 +419,7 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 					std::pair<std::pair<std::string, std::string>,double> edge_inf;
 					edge_inf.first = edge_name;
 					edge_inf.second = (*go1)[e1]._weight;
-					save_connection_out.push_back(edge_inf);
+					save_connection_out->push_back(edge_inf);
 				}
 				//std::cout<<std::endl;
 				if(compteur > 0){
@@ -441,17 +444,17 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 				if(multiple == true){
 					//std::cout<<"Multiple !!!!"<<std::endl;
 					int vertex_save = -1;
-					for(uint i =0; i <in_edge_connection.size(); i++){
-						if(vertex_save != in_edge_connection.at(i).first){
+					for(uint i =0; i <in_edge_connection->size(); i++){
+						if(vertex_save != in_edge_connection->at(i).first){
 							uint rec_vertex = -1;
 							double rec_weight = 0;
 							bool repete = false;
 							std::vector<std::pair<double,int>> truc;
-							tie(neighbourIto, neighbourEndo) = adjacent_vertices(in_edge_connection.at(i).first,*go1);
+							tie(neighbourIto, neighbourEndo) = adjacent_vertices(in_edge_connection->at(i).first,*go1);
 							for (; neighbourIto != neighbourEndo; ++neighbourIto){
 								if(rec_vertex == *neighbourIto){
 									repete = true;
-									tie(e1,found)=edge(vertex(in_edge_connection.at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
+									tie(e1,found)=edge(vertex(in_edge_connection->at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
 									rec_weight += (*go1)[e1]._weight;
 								}else{
 									if(repete == true){
@@ -463,7 +466,7 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 										neighbourIto++;
 										repete = false;
 									}
-									tie(e1,found)=edge(vertex(in_edge_connection.at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
+									tie(e1,found)=edge(vertex(in_edge_connection->at(i).first,*go1),vertex(*neighbourIto,*go1),*go1);
 									rec_weight = (*go1)[e1]._weight;
 									rec_vertex = *neighbourIto;
 								}
@@ -475,11 +478,11 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 							truc.push_back(tt);
 							
 							for(uint id = 0; id < truc.size(); id++){
-								remove_edge(in_edge_connection.at(i).first,truc.at(id).second,*go1);
-								add_edge(in_edge_connection.at(i).first,truc.at(id).second, EdgeProperties("out1","in1",truc.at(id).first), *go1);
+								remove_edge(in_edge_connection->at(i).first,truc.at(id).second,*go1);
+								add_edge(in_edge_connection->at(i).first,truc.at(id).second, EdgeProperties("out1","in1",truc.at(id).first), *go1);
 							}
 							
-							vertex_save = in_edge_connection.at(i).first;
+							vertex_save = in_edge_connection->at(i).first;
 						}
 					}
 				}
@@ -488,19 +491,25 @@ void Merge_Devs_Graph_port(TreeNode *root, bool rec){
 					const char* text = "../../sortie_graphe/Tests/Graphes/Merge/txt/Coupled_Merge2.txt";
 					Plot_Graph(go1,text);
 				}
-				in_edge_connection.clear();
-				out_edge_connection.clear();
-				save_connection_in.clear();
-				save_connection_out.clear();
+				in_edge_connection->clear();
+				out_edge_connection->clear();
+				save_connection_in->clear();
+				save_connection_out->clear();
 			}
 			cpt_vertex++;
 		}
 		table_father1 = table_father2;
 		table_father2.clear();
-		liste_father = liste_father2;
-		liste_father2.clear();
+		liste_father = *liste_father2;
+		liste_father2->clear();
 		compteur++;
 	}
+	
+	delete in_edge_connection;
+	delete out_edge_connection;
+	delete liste_father2;
+	delete save_connection_in;
+	delete save_connection_out;
 }
 
 void Merge_Devs_Graph(TreeNode *root, bool rec){
