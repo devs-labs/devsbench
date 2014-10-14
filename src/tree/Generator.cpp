@@ -97,7 +97,7 @@ void Generator::brhtg_source(Graph *go,int nbr_vertex, int nbr_source,
 
                         if(In_tab(ensemble,val)!=1){
                             ensemble.push_back(val);
-                            go->addEdge(Vertexs.at(j), "", Vertexs.at(val), "");
+                            go->addEdge(Vertexs.at(j), 1, Vertexs.at(val), 1);
                             cpt++;
                         }
                         else{
@@ -145,7 +145,7 @@ void Generator::brhtg_source(Graph *go,int nbr_vertex, int nbr_source,
 
                     if(In_tab(ensemble,val)!=1){
                         ensemble.push_back(val);
-                        go->addEdge(Vertexs.at(l), "", Vertexs.at(val), "");
+                        go->addEdge(Vertexs.at(l), 1, Vertexs.at(val), 1);
                         cpt++;
                     }
                     else{
@@ -231,8 +231,8 @@ void Generator::brhtg_ramification(Graph *go, int nbr_vertex, int nbr_v_min,
 
                             if(In_tab(ensemble,val)!=1){
                                 ensemble.push_back(val);
-                                go->addEdge(Vertexs.at(j), "",
-                                            Vertexs.at(val), "");
+                                go->addEdge(Vertexs.at(j), 1,
+                                            Vertexs.at(val), 1);
                                 cpt++;
                             }
                             else{
@@ -272,7 +272,7 @@ void Generator::brhtg_ramification(Graph *go, int nbr_vertex, int nbr_v_min,
 
                     if(In_tab(ensemble,val)!=1){
                         ensemble.push_back(val);
-                        go->addEdge(Vertexs.at(l), "", Vertexs.at(val), "");
+                        go->addEdge(Vertexs.at(l), 1, Vertexs.at(val), 1);
                         cpt++;
                     }
                     else{
@@ -329,7 +329,7 @@ void Generator::brhtg_exutoire(Graph *go, int nbr_vertex, int nbr_v_min,
 
                     if(In_tab(ensemble,val)!=1&& j!=val){
                         ensemble.push_back(val);
-                        go->addEdge(Vertexs.at(j), "", Vertexs.at(val),"");
+                        go->addEdge(Vertexs.at(j), 1, Vertexs.at(val),1);
                         cpt++;
                     }
                     else{

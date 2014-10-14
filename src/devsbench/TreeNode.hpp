@@ -102,9 +102,12 @@ namespace devsbench {
 		
         void level_max(uint &level) const
         {
+			uint level_tmp;
 			for (std::map < int, TreeNode* >::const_iterator
                      it = _children.begin(); it != _children.end(); ++it) {
-                level = it->second->level();
+                level_tmp = it->second->level();
+                if(level_tmp > level)
+					level = level_tmp;
                 it->second->level_max(level);
             }
         }

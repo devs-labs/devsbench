@@ -34,6 +34,9 @@
 #include <vector>
 
 namespace devsbench {
+	
+typedef std::vector<std::pair<int,int>> VPInt;
+typedef std::vector<std::pair<std::pair<uint,uint>,double>> VPPiid;
          
 void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2, 
 			const std::vector<std::pair<int,int>> &in_edge_connection,
@@ -41,11 +44,9 @@ void Merge_Devs_Level_Coupled(Graph *go1, const Graph *go2,
 			std::vector<std::pair<int,int>> &liste_father, uint cpt_vertex,
 			bool multiple);
 			
-void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<std::pair<int,int>> *in_edge_connection,
-								const std::vector<std::pair<int,int>> *out_edge_connection, 
-								const std::vector<std::pair<std::pair<std::string,std::string>,double>> *save_connection_in,
-								const std::vector<std::pair<std::pair<std::string,std::string>,double>> *save_connection_out, 
-								std::vector<std::pair<int,int>> *liste_father, uint cpt_vertex, bool multiple);
+void Merge_Devs_Coupled_port(Graph *go1, const Graph *go2, const std::vector<VPInt *> edge_connection, 
+							 const std::vector<VPPiid *> save_connection, VPInt *liste_father,
+							 uint cpt_vertex, bool multiple);
 			
 void Merge_Devs_Graph(TreeNode* root, bool rec);
 

@@ -46,8 +46,9 @@ namespace devsbench { namespace devstone {
         TreeNode* generate() const;
 
     private:
-        Graph* build_graph() const;
-        Graph* build_low_level_graph() const;
+		Graph* build_start_graph() const;
+        Graph* build_graph(int id) const;
+        Graph* build_low_level_graph(int id) const;
 
         GeneratorType _type;
         int _depth;

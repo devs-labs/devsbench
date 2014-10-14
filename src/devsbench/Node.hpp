@@ -50,12 +50,12 @@ namespace devsbench {
 
     struct EdgeProperties
     {
-        std::string _beginName;
-        std::string _endName;
+        uint _beginName;
+        uint _endName;
         double      _weight;
 
-        EdgeProperties(const std::string& beginName = "",
-                       const std::string& endName = "",
+        EdgeProperties(const uint &beginName = 1,
+                       const uint &endName = 1,
                        double weight = 1) :
             _beginName(beginName), _endName(endName), _weight(weight)
         { }
@@ -74,9 +74,9 @@ namespace devsbench {
         { }
 
         void addEdge(Graph::vertex_descriptor begin,
-                     const std::string& begin_name,
+                     const uint &begin_name,
                      Graph::vertex_descriptor end,
-                     const std::string& end_name)
+                     const uint &end_name)
         {
             boost::add_edge(begin, end, EdgeProperties(begin_name, end_name, 1),
                             *this);

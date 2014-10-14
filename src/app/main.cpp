@@ -125,7 +125,7 @@ void example1()
     root->display();
     std::cout<<std::endl;
     
-    Merge_Devs_Graph(root, false);
+    Merge_Devs_Graph_port(root, false);
     	
     delete root;
 }
@@ -152,15 +152,15 @@ void example_n_level()
         (*groot)[v0_5] = devsbench::VertexProperties(5, 1., devsbench::COUPLED);
         (*groot)[v0_6] = devsbench::VertexProperties(6, 1., devsbench::ATOMIC);
         
-        boost::add_edge(v0_0, v0_1, EdgeProperties("out1", "in1", 1), *groot);
-        boost::add_edge(v0_1, v0_2, EdgeProperties("out1", "in1", 1), *groot);
-        boost::add_edge(v0_1, v0_5, EdgeProperties("out2", "in2", 1), *groot);
-        boost::add_edge(v0_2, v0_3, EdgeProperties("out1", "in1", 1), *groot);
-        boost::add_edge(v0_2, v0_4, EdgeProperties("out2", "in1", 1), *groot);
-        boost::add_edge(v0_2, v0_5, EdgeProperties("out3", "in1", 1), *groot);
-        boost::add_edge(v0_3, v0_6, EdgeProperties("out1", "in1", 1), *groot);
-        boost::add_edge(v0_4, v0_6, EdgeProperties("out1", "in2", 1), *groot);        
-        boost::add_edge(v0_5, v0_6, EdgeProperties("out1", "in3", 1), *groot);
+        boost::add_edge(v0_0, v0_1, EdgeProperties(1, 1, 1), *groot);
+        boost::add_edge(v0_1, v0_2, EdgeProperties(1, 1, 1), *groot);
+        boost::add_edge(v0_1, v0_5, EdgeProperties(2, 2, 1), *groot);
+        boost::add_edge(v0_2, v0_3, EdgeProperties(1, 1, 1), *groot);
+        boost::add_edge(v0_2, v0_4, EdgeProperties(2, 1, 1), *groot);
+        boost::add_edge(v0_2, v0_5, EdgeProperties(3, 1, 1), *groot);
+        boost::add_edge(v0_3, v0_6, EdgeProperties(1, 1, 1), *groot);
+        boost::add_edge(v0_4, v0_6, EdgeProperties(1, 2, 1), *groot);        
+        boost::add_edge(v0_5, v0_6, EdgeProperties(1, 3, 1), *groot);
       
         root->addGraph(groot);
     }
@@ -185,12 +185,12 @@ void example_n_level()
         (*g11)[v11_5] = devsbench::VertexProperties(12, 1., devsbench::OUTPUT);
         (*g11)[v11_6] = devsbench::VertexProperties(13, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v11_0, v11_1, EdgeProperties("in1", "in1", 1), *g11);
-        boost::add_edge(v11_1, v11_2, EdgeProperties("out1", "in1", 1), *g11);
-        boost::add_edge(v11_1, v11_3, EdgeProperties("out2", "in1", 1), *g11);
-        boost::add_edge(v11_2, v11_5, EdgeProperties("out1", "out1", 1), *g11);
-        boost::add_edge(v11_3, v11_4, EdgeProperties("out1", "in1", 1), *g11);
-        boost::add_edge(v11_4, v11_6, EdgeProperties("out1", "out2", 1), *g11);
+        boost::add_edge(v11_0, v11_1, EdgeProperties(1, 1, 1), *g11);
+        boost::add_edge(v11_1, v11_2, EdgeProperties(1, 1, 1), *g11);
+        boost::add_edge(v11_1, v11_3, EdgeProperties(2, 1, 1), *g11);
+        boost::add_edge(v11_2, v11_5, EdgeProperties(1, 1, 1), *g11);
+        boost::add_edge(v11_3, v11_4, EdgeProperties(1, 1, 1), *g11);
+        boost::add_edge(v11_4, v11_6, EdgeProperties(1, 2, 1), *g11);
 
         n11->addGraph(g11);
     }
@@ -218,15 +218,15 @@ void example_n_level()
         (*g10)[v10_6] = devsbench::VertexProperties(20, 1., devsbench::OUTPUT);
         (*g10)[v10_7] = devsbench::VertexProperties(21, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v10_0, v10_1, EdgeProperties("in1", "in1", 1), *g10);
-        boost::add_edge(v10_1, v10_3, EdgeProperties("out1", "in1", 1), *g10);
-        boost::add_edge(v10_1, v10_3, EdgeProperties("out2", "in2", 1), *g10);
-        boost::add_edge(v10_3, v10_2, EdgeProperties("out2", "in1", 1), *g10);
-        boost::add_edge(v10_3, v10_4, EdgeProperties("out1", "in1", 1), *g10);
-        boost::add_edge(v10_2, v10_1, EdgeProperties("out1", "in2", 1), *g10);
-        boost::add_edge(v10_2, v10_5, EdgeProperties("out2", "out3", 1), *g10);
-        boost::add_edge(v10_4, v10_6, EdgeProperties("out1", "out1", 1), *g10);
-        boost::add_edge(v10_4, v10_7, EdgeProperties("out2", "out2", 1), *g10);
+        boost::add_edge(v10_0, v10_1, EdgeProperties(1, 1, 1), *g10);
+        boost::add_edge(v10_1, v10_3, EdgeProperties(1, 1, 1), *g10);
+        boost::add_edge(v10_1, v10_3, EdgeProperties(2, 2, 1), *g10);
+        boost::add_edge(v10_3, v10_2, EdgeProperties(2, 1, 1), *g10);
+        boost::add_edge(v10_3, v10_4, EdgeProperties(1, 1, 1), *g10);
+        boost::add_edge(v10_2, v10_1, EdgeProperties(1, 2, 1), *g10);
+        boost::add_edge(v10_2, v10_5, EdgeProperties(2, 3, 1), *g10);
+        boost::add_edge(v10_4, v10_6, EdgeProperties(1, 1, 1), *g10);
+        boost::add_edge(v10_4, v10_7, EdgeProperties(2, 2, 1), *g10);
 
         n10->addGraph(g10);
     }
@@ -256,15 +256,15 @@ void example_n_level()
         (*g12)[v12_7] = devsbench::VertexProperties(29, 1., devsbench::ATOMIC);
         (*g12)[v12_8] = devsbench::VertexProperties(30, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v12_0, v12_2, EdgeProperties("in2" , "in1", 1), *g12);
-        boost::add_edge(v12_1, v12_3, EdgeProperties("in1" , "in1", 1), *g12);
-        boost::add_edge(v12_2, v12_4, EdgeProperties("out1", "in1", 1), *g12);
-        boost::add_edge(v12_3, v12_2, EdgeProperties("out1", "in2", 1), *g12);
-        boost::add_edge(v12_3, v12_4, EdgeProperties("out2", "in2", 1), *g12);
-        boost::add_edge(v12_4, v12_5, EdgeProperties("out1", "in1", 1), *g12);
-        boost::add_edge(v12_7, v12_8, EdgeProperties("out1", "out1", 1), *g12);
-        boost::add_edge(v12_5, v12_6, EdgeProperties("out1", "in1", 1), *g12);
-        boost::add_edge(v12_5, v12_7, EdgeProperties("out2", "in1", 1), *g12);
+        boost::add_edge(v12_0, v12_2, EdgeProperties(2, 1, 1), *g12);
+        boost::add_edge(v12_1, v12_3, EdgeProperties(1, 1, 1), *g12);
+        boost::add_edge(v12_2, v12_4, EdgeProperties(1, 1, 1), *g12);
+        boost::add_edge(v12_3, v12_2, EdgeProperties(1, 2, 1), *g12);
+        boost::add_edge(v12_3, v12_4, EdgeProperties(2, 2, 1), *g12);
+        boost::add_edge(v12_4, v12_5, EdgeProperties(1, 1, 1), *g12);
+        boost::add_edge(v12_7, v12_8, EdgeProperties(1, 1, 1), *g12);
+        boost::add_edge(v12_5, v12_6, EdgeProperties(1, 1, 1), *g12);
+        boost::add_edge(v12_5, v12_7, EdgeProperties(2, 1, 1), *g12);
 
         n12->addGraph(g12);
     }
@@ -289,11 +289,11 @@ void example_n_level()
         (*g20)[v20_4] = devsbench::VertexProperties(35, 1., devsbench::OUTPUT);
         (*g20)[v20_5] = devsbench::VertexProperties(36, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v20_0, v20_1, EdgeProperties("in1", "in1", 1), *g20);
-        boost::add_edge(v20_1, v20_2, EdgeProperties("out1", "in1", 1), *g20);
-        boost::add_edge(v20_1, v20_3, EdgeProperties("out2", "in1", 1), *g20);
-        boost::add_edge(v20_2, v20_5, EdgeProperties("out1", "out2", 1), *g20);
-        boost::add_edge(v20_3, v20_4, EdgeProperties("out1", "out1", 1), *g20);
+        boost::add_edge(v20_0, v20_1, EdgeProperties(1, 1, 1), *g20);
+        boost::add_edge(v20_1, v20_2, EdgeProperties(1, 1, 1), *g20);
+        boost::add_edge(v20_1, v20_3, EdgeProperties(2, 1, 1), *g20);
+        boost::add_edge(v20_2, v20_5, EdgeProperties(1, 2, 1), *g20);
+        boost::add_edge(v20_3, v20_4, EdgeProperties(1, 1, 1), *g20);
 
         n20->addGraph(g20);
     }
@@ -318,13 +318,13 @@ void example_n_level()
         (*g21)[v21_3] = devsbench::VertexProperties(40, 1., devsbench::ATOMIC);
         (*g21)[v21_4] = devsbench::VertexProperties(41, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v21_0, v21_2, EdgeProperties("in1", "in4", 1), *g21);
-        boost::add_edge(v21_1, v21_2, EdgeProperties("out1", "in1", 1), *g21);
-        boost::add_edge(v21_1, v21_2, EdgeProperties("out2", "in2", 1), *g21);
-        boost::add_edge(v21_1, v21_2, EdgeProperties("out3", "in3", 1), *g21);
-        boost::add_edge(v21_1, v21_3, EdgeProperties("out4", "in1", 1), *g21);
-        boost::add_edge(v21_2, v21_3, EdgeProperties("out1", "in2", 1), *g21);
-        boost::add_edge(v21_3, v21_4, EdgeProperties("out1", "out1", 1), *g21);
+        boost::add_edge(v21_0, v21_2, EdgeProperties(1, 4, 1), *g21);
+        boost::add_edge(v21_1, v21_2, EdgeProperties(1, 1, 1), *g21);
+        boost::add_edge(v21_1, v21_2, EdgeProperties(2, 2, 1), *g21);
+        boost::add_edge(v21_1, v21_2, EdgeProperties(3, 3, 1), *g21);
+        boost::add_edge(v21_1, v21_3, EdgeProperties(4, 1, 1), *g21);
+        boost::add_edge(v21_2, v21_3, EdgeProperties(1, 2, 1), *g21);
+        boost::add_edge(v21_3, v21_4, EdgeProperties(1, 1, 1), *g21);
 
         n21->addGraph(g21);
     }
@@ -349,12 +349,12 @@ void example_n_level()
         (*g22)[v22_4] = devsbench::VertexProperties(46, 1., devsbench::ATOMIC);
         (*g22)[v22_5] = devsbench::VertexProperties(47, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v22_0, v22_2, EdgeProperties("in2", "in1", 1), *g22);
-        boost::add_edge(v22_1, v22_3, EdgeProperties("in1", "in1", 1), *g22);
-        boost::add_edge(v22_2, v22_4, EdgeProperties("out1", "in1", 1), *g22);
-        boost::add_edge(v22_2, v22_3, EdgeProperties("out2", "in2", 1), *g22);
-        boost::add_edge(v22_3, v22_4, EdgeProperties("out1", "in2", 1), *g22);
-        boost::add_edge(v22_4, v22_5, EdgeProperties("out1", "out1", 1), *g22);
+        boost::add_edge(v22_0, v22_2, EdgeProperties(2, 1, 1), *g22);
+        boost::add_edge(v22_1, v22_3, EdgeProperties(1, 1, 1), *g22);
+        boost::add_edge(v22_2, v22_4, EdgeProperties(1, 1, 1), *g22);
+        boost::add_edge(v22_2, v22_3, EdgeProperties(2, 2, 1), *g22);
+        boost::add_edge(v22_3, v22_4, EdgeProperties(1, 2, 1), *g22);
+        boost::add_edge(v22_4, v22_5, EdgeProperties(1, 1, 1), *g22);
 
         n22->addGraph(g22);
     }
@@ -382,13 +382,13 @@ void example_n_level()
         (*g23)[v23_5] = devsbench::VertexProperties(53, 1., devsbench::OUTPUT);
         (*g23)[v23_6] = devsbench::VertexProperties(54, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v23_0, v23_1, EdgeProperties("in1", "in1", 1), *g23);
-        boost::add_edge(v23_1, v23_3, EdgeProperties("out2", "in1", 1), *g23);
-        boost::add_edge(v23_1, v23_2, EdgeProperties("out1", "in1", 1), *g23);
-        boost::add_edge(v23_2, v23_4, EdgeProperties("out1", "in1", 1), *g23);
-        boost::add_edge(v23_3, v23_4, EdgeProperties("out1", "in2", 1), *g23);
-        boost::add_edge(v23_4, v23_5, EdgeProperties("out1", "out1", 1), *g23);
-        boost::add_edge(v23_4, v23_6, EdgeProperties("out2", "out2", 1), *g23);
+        boost::add_edge(v23_0, v23_1, EdgeProperties(1, 1, 1), *g23);
+        boost::add_edge(v23_1, v23_3, EdgeProperties(2, 1, 1), *g23);
+        boost::add_edge(v23_1, v23_2, EdgeProperties(1, 1, 1), *g23);
+        boost::add_edge(v23_2, v23_4, EdgeProperties(1, 1, 1), *g23);
+        boost::add_edge(v23_3, v23_4, EdgeProperties(1, 2, 1), *g23);
+        boost::add_edge(v23_4, v23_5, EdgeProperties(1, 1, 1), *g23);
+        boost::add_edge(v23_4, v23_6, EdgeProperties(2, 2, 1), *g23);
 
         n23->addGraph(g23);
     }
@@ -409,9 +409,9 @@ void example_n_level()
         (*g30)[v30_2] = devsbench::VertexProperties(57, 1., devsbench::ATOMIC);
         (*g30)[v30_3] = devsbench::VertexProperties(58, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v30_0, v30_1, EdgeProperties("in1", "in1" , 1), *g30);
-        boost::add_edge(v30_1, v30_2, EdgeProperties("out1", "in1" , 1), *g30);
-        boost::add_edge(v30_2, v30_3, EdgeProperties("out1", "out1", 1), *g30);
+        boost::add_edge(v30_0, v30_1, EdgeProperties(1, 1 , 1), *g30);
+        boost::add_edge(v30_1, v30_2, EdgeProperties(1, 1 , 1), *g30);
+        boost::add_edge(v30_2, v30_3, EdgeProperties(1, 1 , 1), *g30);
 
         n30->addGraph(g30);
     }
@@ -433,12 +433,12 @@ void example_n_level()
         (*g31)[v31_2] = devsbench::VertexProperties(61, 1., devsbench::COUPLED);
         (*g31)[v31_3] = devsbench::VertexProperties(62, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v31_0, v31_1, EdgeProperties("in1", "in1" , 1), *g31);
-        boost::add_edge(v31_1, v31_2, EdgeProperties("out1", "in1" , 1), *g31);
-        boost::add_edge(v31_1, v31_2, EdgeProperties("out2", "in2" , 2), *g31);
-        boost::add_edge(v31_1, v31_2, EdgeProperties("out3", "in3" , 3), *g31);
-        boost::add_edge(v31_1, v31_2, EdgeProperties("out4", "in4" , 4), *g31);
-        boost::add_edge(v31_2, v31_3, EdgeProperties("out1", "out1", 1), *g31);
+        boost::add_edge(v31_0, v31_1, EdgeProperties(1, 1 , 1), *g31);
+        boost::add_edge(v31_1, v31_2, EdgeProperties(1, 1 , 1), *g31);
+        boost::add_edge(v31_1, v31_2, EdgeProperties(2, 2 , 2), *g31);
+        boost::add_edge(v31_1, v31_2, EdgeProperties(3, 3 , 3), *g31);
+        boost::add_edge(v31_1, v31_2, EdgeProperties(4, 4 , 4), *g31);
+        boost::add_edge(v31_2, v31_3, EdgeProperties(1, 1 , 1), *g31);
 
         n31->addGraph(g31);
     }
@@ -467,13 +467,13 @@ void example_n_level()
         (*g40)[v40_6] = devsbench::VertexProperties(69, 1., devsbench::ATOMIC);
         (*g40)[v40_7] = devsbench::VertexProperties(70, 1., devsbench::OUTPUT);
         
-        boost::add_edge(v40_0, v40_4, EdgeProperties("in1", "in1", 1), *g40);
-        boost::add_edge(v40_1, v40_4, EdgeProperties("in2", "in2", 2), *g40);
-        boost::add_edge(v40_2, v40_5, EdgeProperties("in3", "in1", 3), *g40);
-        boost::add_edge(v40_3, v40_5, EdgeProperties("in4", "in2", 4), *g40);
-        boost::add_edge(v40_4, v40_6, EdgeProperties("out1", "in1", 1), *g40);
-        boost::add_edge(v40_5, v40_6, EdgeProperties("out1", "in2", 1), *g40);
-        boost::add_edge(v40_6, v40_7, EdgeProperties("out1", "out1", 1), *g40);
+        boost::add_edge(v40_0, v40_4, EdgeProperties(1, 1, 1), *g40);
+        boost::add_edge(v40_1, v40_4, EdgeProperties(2, 2, 2), *g40);
+        boost::add_edge(v40_2, v40_5, EdgeProperties(3, 1, 3), *g40);
+        boost::add_edge(v40_3, v40_5, EdgeProperties(4, 2, 4), *g40);
+        boost::add_edge(v40_4, v40_6, EdgeProperties(1, 1, 1), *g40);
+        boost::add_edge(v40_5, v40_6, EdgeProperties(1, 2, 1), *g40);
+        boost::add_edge(v40_6, v40_7, EdgeProperties(1, 1, 1), *g40);
 
         n40->addGraph(g40);
     }
@@ -487,57 +487,46 @@ void example_n_level()
     
     Merge_Devs_Graph_port(root, true);
     
-    
-    delete root;
+	delete root;
     
 }
 
 void exampleLI()
 {
-    devstone::Generator generator(devstone::LI, 3, 4, 1, 1);
+    devstone::Generator generator(devstone::LI, 4, 4, 1, 1);
     devsbench::TreeNode* root = generator.generate();
 
     std::cout << "Example LI:" << std::endl;
     root->display();
-    
-    /* Modifs !!! */
-    std::cout<<std::endl;
-    Graph* go1 = root->graph();
-	tie(vertexIto, vertexEndo) = vertices(*go1);
-	for (; vertexIto != vertexEndo; ++vertexIto){
-		if((*go1)[*vertexIto]._type != COUPLED){
-			std::cout<<*vertexIto<<" -> ";
-			tie(neighbourIto, neighbourEndo) = adjacent_vertices(*vertexIto,*go1);
-			for (; neighbourIto != neighbourEndo; ++neighbourIto){
-				std::cout<<*neighbourIto<<" ";
-			}
-			std::cout<<std::endl;
-		}else{
-			std::cout<<"C'est un couplé : "<<std::endl;
-		}
-	}
-
+   
+   
+	Merge_Devs_Graph_port(root, true);
+	
     delete root;
 }
 
 void exampleHI()
 {
-    devstone::Generator generator(devstone::HI, 3, 4, 1, 1);
+    devstone::Generator generator(devstone::HI, 4, 4, 1, 1);
     devsbench::TreeNode* root = generator.generate();
 
     std::cout << "Example HI:" << std::endl;
     root->display();
+    
+    Merge_Devs_Graph_port(root, true);
 
     delete root;
 }
 
 void exampleHO()
 {
-    devstone::Generator generator(devstone::HO, 3, 4, 1, 1);
+    devstone::Generator generator(devstone::HO, 4, 4, 1, 1);
     devsbench::TreeNode* root = generator.generate();
 
     std::cout << "Example HO:" << std::endl;
     root->display();
+    
+    Merge_Devs_Graph_port(root, true);
 		
     delete root;
 }
@@ -561,11 +550,19 @@ void exampleTree()
 int main()
 {
     //example1();
-    //std::cout<<std::endl;
+    std::cout<<std::endl;
     example_n_level();
-    //exampleLI();
-    //exampleHI();
-    //exampleHO();
+    /*std::cout<<std::endl;
+    std::cout<<std::endl;
+    exampleLI();
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    exampleHI();
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    exampleHO();
+    std::cout<<std::endl;
+    std::cout<<std::endl;*/
     //exampleTree();
     return 0;
 }
